@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { WifiHigh, ArrowRight } from 'lucide-react';
+import { WifiHigh, ArrowRight, Satellite } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Solution = () => {
