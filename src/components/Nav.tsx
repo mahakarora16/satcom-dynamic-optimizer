@@ -30,13 +30,11 @@ const Nav = () => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Satellite className="h-6 w-6 text-satellite-blue" />
-          <span className="font-semibold text-lg">SatComOptimize</span>
+          <span className="font-semibold text-lg">SAT AI</span>
         </div>
         
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#problem" className="text-sm font-medium hover:text-satellite-blue transition-colors">Problem</a>
           <a href="#solution" className="text-sm font-medium hover:text-satellite-blue transition-colors">Solution</a>
-          <a href="#features" className="text-sm font-medium hover:text-satellite-blue transition-colors">Features</a>
           <a href="#contact" className="text-sm font-medium hover:text-satellite-blue transition-colors">Contact</a>
         </div>
         

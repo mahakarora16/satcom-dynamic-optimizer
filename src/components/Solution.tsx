@@ -5,20 +5,25 @@ import { Button } from '@/components/ui/button';
 
 const Solution = () => {
   return (
-    <section id="solution" className="py-24 relative bg-satellite-dark/5">
-      <div className="container mx-auto px-6">
+    <section id="solution" className="min-h-screen pt-20 flex items-center relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background to-satellite-dark/10 z-0"></div>
+      
+      <div className="container mx-auto px-6 z-10 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8 order-2 lg:order-1">
-            <div className="inline-block glass px-4 py-2 rounded-full animate-fade-in">
-              <p className="text-sm font-medium">Our Solution</p>
+          <div className="space-y-8 pt-8 lg:pt-0">
+            <div className="inline-block glass px-4 py-2 rounded-full animate-fade-in-up">
+              <p className="text-sm font-medium flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-satellite-blue animate-pulse"></span>
+                Next Generation AI for Satellite Communications
+              </p>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold animate-fade-in animation-delay-200">
-              AI-Driven <span className="text-gradient">Dynamic Optimization</span> System
-            </h2>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-fade-in-up animation-delay-200">
+              <span className="text-gradient">SAT AI</span>
+            </h1>
             
-            <p className="text-lg text-muted-foreground animate-fade-in animation-delay-400">
-              Our platform leverages artificial intelligence and machine learning to provide real-time adaptation to changing conditions, optimizing bandwidth allocation and signal quality.
+            <p className="text-lg text-muted-foreground max-w-xl animate-fade-in-up animation-delay-400">
+              AI-driven optimization for satellite networks, maximizing bandwidth, reducing signal degradation, and enhancing communication efficiency.
             </p>
             
             <div className="space-y-6 animate-fade-in animation-delay-600">
@@ -53,8 +58,8 @@ const Solution = () => {
               </div>
             </div>
             
-            <Button className="group animate-fade-in animation-delay-800">
-              Explore Technical Details
+            <Button className="group animate-fade-in animation-delay-800 bg-gradient-to-r from-satellite-blue to-satellite-purple hover:opacity-90 transition-opacity">
+              Get Started
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
@@ -104,7 +109,7 @@ const Solution = () => {
               {/* Overlay text */}
               <div className="absolute top-8 left-8">
                 <div className="glass px-4 py-2 rounded-lg">
-                  <p className="text-sm font-medium text-satellite-blue">AI-Optimization Active</p>
+                  <p className="text-sm font-medium text-satellite-blue">SAT AI Active</p>
                 </div>
               </div>
             </div>
@@ -114,6 +119,10 @@ const Solution = () => {
           </div>
         </div>
       </div>
+      
+      {/* Decorative elements */}
+      <div className="absolute top-40 left-10 w-64 h-64 rounded-full bg-satellite-blue/10 blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-64 h-64 rounded-full bg-satellite-purple/10 blur-3xl"></div>
     </section>
   );
 };
