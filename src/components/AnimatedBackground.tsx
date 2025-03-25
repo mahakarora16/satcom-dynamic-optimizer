@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Satellite } from 'lucide-react';
 
@@ -15,10 +16,10 @@ const AnimatedBackground = () => {
         container.removeChild(container.firstChild);
       }
       
-      // Create floating orbs
-      for (let i = 0; i < 10; i++) {
+      // Create floating orbs with more vibrant colors
+      for (let i = 0; i < 12; i++) {
         const orb = document.createElement('div');
-        const size = Math.random() * 200 + 100; // Larger orbs
+        const size = Math.random() * 250 + 150; // Larger orbs
         
         orb.className = 'absolute rounded-full';
         orb.style.width = `${size}px`;
@@ -36,7 +37,7 @@ const AnimatedBackground = () => {
       }
       
       // Create orbit paths
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         const orbitPath = document.createElement('div');
         const size = 300 + (i * 150); // Increasing orbit sizes
         
@@ -48,21 +49,40 @@ const AnimatedBackground = () => {
         container.appendChild(orbitPath);
       }
       
-      // Create satellites (larger and more prominent)
-      for (let i = 0; i < 8; i++) {
+      // Create satellites including side satellites
+      const totalSatellites = 15; // Increased number of satellites
+      
+      for (let i = 0; i < totalSatellites; i++) {
         const satellite = document.createElement('div');
         satellite.className = 'absolute';
-        satellite.style.left = '50%';
-        satellite.style.top = '50%';
-        satellite.style.transform = 'translate(-50%, -50%)';
         
-        // Different orbit sizes and speeds
-        const orbitSize = 150 + (i % 3) * 150;
-        const orbitSpeed = 30 + (i % 5) * 10;
-        const orbitDelay = i * (360 / 8); // Distribute satellites evenly around orbits
+        // Position satellites around the screen, with focus on the sides
+        if (i < 5) {
+          // Center orbit satellites
+          satellite.style.left = '50%';
+          satellite.style.top = '50%';
+          satellite.style.transform = 'translate(-50%, -50%)';
+          
+          const orbitSize = 150 + (i % 3) * 150;
+          const orbitSpeed = 30 + (i % 5) * 10;
+          const orbitDelay = i * (360 / 5);
+          
+          satellite.style.animation = `orbit ${orbitSpeed}s linear infinite`;
+          satellite.style.animationDelay = `-${orbitDelay}s`;
+        } else if (i < 10) {
+          // Left side satellites
+          satellite.style.left = '10%';
+          satellite.style.top = `${15 + ((i - 5) * 20)}%`;
+          satellite.style.animation = `float-element ${8 + (i % 3) * 4}s ease-in-out infinite alternate`;
+          satellite.style.animationDelay = `${(i - 5) * 0.7}s`;
+        } else {
+          // Right side satellites
+          satellite.style.left = '90%';
+          satellite.style.top = `${15 + ((i - 10) * 20)}%`;
+          satellite.style.animation = `float-element ${8 + (i % 3) * 4}s ease-in-out infinite alternate-reverse`;
+          satellite.style.animationDelay = `${(i - 10) * 0.7}s`;
+        }
         
-        satellite.style.animation = `orbit ${orbitSpeed}s linear infinite`;
-        satellite.style.animationDelay = `-${orbitDelay}s`; // Offset each satellite
         satellite.style.zIndex = '2';
         
         // Create a container for the satellite to enable proper animation
@@ -70,8 +90,14 @@ const AnimatedBackground = () => {
         satelliteContainer.style.position = 'absolute';
         satelliteContainer.style.width = '48px';
         satelliteContainer.style.height = '48px';
-        satelliteContainer.style.transform = `translateX(${orbitSize / 2}px)`; // Position on the orbit
-        satelliteContainer.style.animation = 'rotating 20s linear infinite'; // Rotate the satellite itself
+        
+        if (i < 5) {
+          // Center orbit satellites need special positioning
+          const orbitSize = 150 + (i % 3) * 150;
+          satelliteContainer.style.transform = `translateX(${orbitSize / 2}px)`;
+        }
+        
+        satelliteContainer.style.animation = 'rotating 20s linear infinite';
         
         // Create the satellite SVG
         const satelliteIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -109,7 +135,7 @@ const AnimatedBackground = () => {
       // Keep the pulse rings (enhanced)
       for (let i = 0; i < 3; i++) {
         const ring = document.createElement('div');
-        ring.className = 'absolute rounded-full border-2 border-satellite-blue top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
+        ring.className = 'absolute rounded-full border-2 border-satellite-purple top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
         ring.style.width = '20vw';
         ring.style.height = '20vw';
         ring.style.opacity = '0';
@@ -122,17 +148,19 @@ const AnimatedBackground = () => {
     };
     
     const getRandomColor = () => {
-      const colors = ['#0EA5E9', '#8B5CF6', '#6366F1', '#F97316'];
+      // Updated vibrant colors
+      const colors = ['#F97316', '#8B5CF6', '#6366F1', '#EC4899', '#06B6D4', '#10B981'];
       return colors[Math.floor(Math.random() * colors.length)];
     };
     
     const getRandomGradient = () => {
+      // Updated vibrant gradients
       const gradients = [
-        'linear-gradient(225deg, #0EA5E9, #8B5CF6)',
-        'linear-gradient(90deg, #8B5CF6, #D946EF)',
-        'linear-gradient(45deg, #F97316, #0EA5E9)',
-        'linear-gradient(135deg, #6366F1, #0EA5E9)',
-        'linear-gradient(90deg, #0EA5E9, #22D3EE)'
+        'linear-gradient(225deg, #F97316, #8B5CF6)',
+        'linear-gradient(90deg, #8B5CF6, #EC4899)',
+        'linear-gradient(45deg, #F97316, #06B6D4)',
+        'linear-gradient(135deg, #6366F1, #10B981)',
+        'linear-gradient(90deg, #06B6D4, #10B981)'
       ];
       return gradients[Math.floor(Math.random() * gradients.length)];
     };
@@ -164,6 +192,12 @@ const AnimatedBackground = () => {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
+      
+      @keyframes float-element {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(10deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+      }
     `;
     document.head.appendChild(styleSheet);
     
@@ -176,7 +210,7 @@ const AnimatedBackground = () => {
   return (
     <div className="absolute inset-0 overflow-hidden" ref={containerRef}>
       {/* Background elements will be added via JavaScript */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background to-satellite-dark/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-satellite-dark to-purple-900/20"></div>
     </div>
   );
 };
