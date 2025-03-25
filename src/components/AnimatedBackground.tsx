@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef } from 'react';
-import { Satellite } from 'lucide-react';
+import { Satellite, Radio, Signal } from 'lucide-react';
 
 const AnimatedBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,8 +48,8 @@ const AnimatedBackground = () => {
         container.appendChild(orbitPath);
       }
       
-      // Create satellites including side satellites
-      const totalSatellites = 15; // Increased number of satellites
+      // Create more realistic satellites
+      const totalSatellites = 20; // Increased number of satellites
       
       for (let i = 0; i < totalSatellites; i++) {
         const satellite = document.createElement('div');
@@ -69,27 +68,28 @@ const AnimatedBackground = () => {
           
           satellite.style.animation = `orbit ${orbitSpeed}s linear infinite`;
           satellite.style.animationDelay = `-${orbitDelay}s`;
-        } else if (i < 10) {
-          // Left side satellites
-          satellite.style.left = '10%';
-          satellite.style.top = `${15 + ((i - 5) * 20)}%`;
-          satellite.style.animation = `float-element ${8 + (i % 3) * 4}s ease-in-out infinite alternate`;
+        } else if (i < 13) {
+          // Left side satellites with staggered vertical positioning
+          satellite.style.left = `${Math.random() * 15 + 2}%`;
+          satellite.style.top = `${10 + ((i - 5) * 12)}%`;
+          satellite.style.animation = `float-element ${8 + (i % 4) * 3}s ease-in-out infinite alternate`;
           satellite.style.animationDelay = `${(i - 5) * 0.7}s`;
         } else {
-          // Right side satellites
-          satellite.style.left = '90%';
-          satellite.style.top = `${15 + ((i - 10) * 20)}%`;
-          satellite.style.animation = `float-element ${8 + (i % 3) * 4}s ease-in-out infinite alternate-reverse`;
-          satellite.style.animationDelay = `${(i - 10) * 0.7}s`;
+          // Right side satellites with staggered vertical positioning
+          satellite.style.left = `${Math.random() * 15 + 83}%`;
+          satellite.style.top = `${10 + ((i - 13) * 12)}%`;
+          satellite.style.animation = `float-element ${8 + (i % 4) * 3}s ease-in-out infinite alternate-reverse`;
+          satellite.style.animationDelay = `${(i - 13) * 0.7}s`;
         }
         
         satellite.style.zIndex = '2';
         
         // Create a container for the satellite to enable proper animation
         const satelliteContainer = document.createElement('div');
+        satelliteContainer.className = 'realistic-satellite';
         satelliteContainer.style.position = 'absolute';
-        satelliteContainer.style.width = '48px';
-        satelliteContainer.style.height = '48px';
+        satelliteContainer.style.width = '64px';
+        satelliteContainer.style.height = '64px';
         
         if (i < 5) {
           // Center orbit satellites need special positioning
@@ -97,39 +97,129 @@ const AnimatedBackground = () => {
           satelliteContainer.style.transform = `translateX(${orbitSize / 2}px)`;
         }
         
-        satelliteContainer.style.animation = 'rotating 20s linear infinite';
+        satelliteContainer.style.animation = `${Math.random() > 0.5 ? 'rotating' : 'rotating-reverse'} ${15 + Math.random() * 10}s linear infinite`;
         
-        // Create the satellite SVG
-        const satelliteIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        satelliteIcon.setAttribute('viewBox', '0 0 24 24');
-        satelliteIcon.setAttribute('width', '48');
-        satelliteIcon.setAttribute('height', '48');
-        satelliteIcon.setAttribute('fill', 'none');
-        satelliteIcon.setAttribute('stroke', 'currentColor');
-        satelliteIcon.setAttribute('stroke-width', '2');
-        satelliteIcon.setAttribute('stroke-linecap', 'round');
-        satelliteIcon.setAttribute('stroke-linejoin', 'round');
+        // Create the satellite body (metallic look)
+        const satelliteBody = document.createElement('div');
+        satelliteBody.className = 'satellite-body';
+        satelliteBody.style.width = '40px';
+        satelliteBody.style.height = '20px';
+        satelliteBody.style.background = 'linear-gradient(145deg, #CCC, #999)';
+        satelliteBody.style.borderRadius = '4px';
+        satelliteBody.style.position = 'absolute';
+        satelliteBody.style.left = '12px';
+        satelliteBody.style.top = '22px';
+        satelliteBody.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.3)';
         
-        // This is a simple path that resembles the Satellite icon
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', 'M3.9 8.1L2 6.2m14.5 4.2c1.8-1.8 2.2-4.5.9-5.8s-4-1-5.8.9-2.2 4.5-.9 5.8 4 1 5.8-.9zM8 15l-1 1m9-9l-1 1m-5.6 5.6c-1 1-2.5 1-3.5 0s-1-2.5 0-3.5 2.5-1 3.5 0 1 2.5 0 3.5zm6 6c-1 1-2.5 1-3.5 0s-1-2.5 0-3.5 2.5-1 3.5 0 1 2.5 0 3.5z');
+        // Create solar panels
+        const solarPanel1 = document.createElement('div');
+        solarPanel1.className = 'solar-panel';
+        solarPanel1.style.width = '32px';
+        solarPanel1.style.height = '10px';
+        solarPanel1.style.background = 'linear-gradient(90deg, #2563eb, #3b82f6)';
+        solarPanel1.style.position = 'absolute';
+        solarPanel1.style.left = '-20px';
+        solarPanel1.style.top = '26px';
+        solarPanel1.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.3)';
         
-        satelliteIcon.appendChild(path);
-        satelliteIcon.style.color = getRandomColor();
+        const solarPanel2 = document.createElement('div');
+        solarPanel2.className = 'solar-panel';
+        solarPanel2.style.width = '32px';
+        solarPanel2.style.height = '10px';
+        solarPanel2.style.background = 'linear-gradient(90deg, #2563eb, #3b82f6)';
+        solarPanel2.style.position = 'absolute';
+        solarPanel2.style.right = '-20px';
+        solarPanel2.style.top = '26px';
+        solarPanel2.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.3)';
         
-        satelliteContainer.appendChild(satelliteIcon);
-        satellite.appendChild(satelliteContainer);
-        container.appendChild(satellite);
-        
-        // Add a satellite beam for some satellites
+        // Add satellite dish or antenna for some satellites
         if (i % 3 === 0) {
+          const antenna = document.createElement('div');
+          antenna.className = 'antenna';
+          antenna.style.width = '2px';
+          antenna.style.height = '15px';
+          antenna.style.background = '#BBB';
+          antenna.style.position = 'absolute';
+          antenna.style.left = '32px';
+          antenna.style.top = '7px';
+          
+          const antennaTip = document.createElement('div');
+          antennaTip.className = 'antenna-tip';
+          antennaTip.style.width = '6px';
+          antennaTip.style.height = '6px';
+          antennaTip.style.borderRadius = '50%';
+          antennaTip.style.background = '#F97316';
+          antennaTip.style.position = 'absolute';
+          antennaTip.style.left = '-2px';
+          antennaTip.style.top = '-6px';
+          antennaTip.style.animation = 'pulse 2s ease-in-out infinite';
+          
+          antenna.appendChild(antennaTip);
+          satelliteBody.appendChild(antenna);
+        } else if (i % 3 === 1) {
+          const dish = document.createElement('div');
+          dish.className = 'satellite-dish';
+          dish.style.width = '14px';
+          dish.style.height = '14px';
+          dish.style.borderRadius = '50%';
+          dish.style.background = 'linear-gradient(145deg, #DDD, #AAA)';
+          dish.style.position = 'absolute';
+          dish.style.left = '13px';
+          dish.style.top = '8px';
+          dish.style.transform = 'rotate(-30deg)';
+          dish.style.boxShadow = '0 1px 2px rgba(0, 0, 0, 0.2)';
+          
+          satelliteBody.appendChild(dish);
+        }
+        
+        // Add beam effect for some side satellites
+        if (i > 5 && i % 4 === 0) {
           const beam = document.createElement('div');
           beam.className = 'satellite-beam';
-          beam.style.height = '100px';
-          beam.style.left = '50%';
-          beam.style.top = '100%';
+          beam.style.position = 'absolute';
+          beam.style.width = '2px';
+          beam.style.height = '80px';
+          beam.style.background = 'linear-gradient(to bottom, rgba(139, 92, 246, 0.8), rgba(139, 92, 246, 0))';
+          
+          if (i < 13) { // Left side satellites
+            beam.style.left = '32px';
+            beam.style.top = '30px';
+            beam.style.transform = 'rotate(20deg)';
+          } else { // Right side satellites
+            beam.style.left = '32px';
+            beam.style.top = '30px';
+            beam.style.transform = 'rotate(-20deg)';
+          }
+          
+          beam.style.animation = 'beam-pulse 2s ease-in-out infinite';
           satelliteContainer.appendChild(beam);
         }
+        
+        // Add signal waves for some satellites
+        if (i > 5 && i % 5 === 0) {
+          for (let j = 0; j < 3; j++) {
+            const signalWave = document.createElement('div');
+            signalWave.className = 'signal-wave';
+            signalWave.style.position = 'absolute';
+            signalWave.style.width = `${20 + j * 10}px`;
+            signalWave.style.height = `${20 + j * 10}px`;
+            signalWave.style.borderRadius = '50%';
+            signalWave.style.border = '1px solid rgba(249, 115, 22, 0.7)';
+            signalWave.style.left = '22px';
+            signalWave.style.top = '22px';
+            signalWave.style.opacity = '0';
+            signalWave.style.animation = `ping 2s cubic-bezier(0, 0, 0.2, 1) infinite`;
+            signalWave.style.animationDelay = `${j * 0.5}s`;
+            
+            satelliteContainer.appendChild(signalWave);
+          }
+        }
+        
+        satelliteContainer.appendChild(satelliteBody);
+        satelliteContainer.appendChild(solarPanel1);
+        satelliteContainer.appendChild(solarPanel2);
+        satellite.appendChild(satelliteContainer);
+        container.appendChild(satellite);
       }
       
       // Keep the pulse rings (enhanced)
@@ -193,10 +283,21 @@ const AnimatedBackground = () => {
         100% { transform: rotate(360deg); }
       }
       
+      @keyframes rotating-reverse {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(-360deg); }
+      }
+      
       @keyframes float-element {
         0% { transform: translateY(0) rotate(0deg); }
         50% { transform: translateY(-20px) rotate(10deg); }
         100% { transform: translateY(0) rotate(0deg); }
+      }
+      
+      @keyframes beam-pulse {
+        0% { opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { opacity: 0.3; }
       }
     `;
     document.head.appendChild(styleSheet);
