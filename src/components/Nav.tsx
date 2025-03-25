@@ -29,19 +29,14 @@ const Nav = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Satellite className="h-6 w-6 text-satellite-blue" />
+          <Satellite className="h-6 w-6 text-satellite-blue animate-pulse" />
           <span className="font-semibold text-lg">SAT AI</span>
-        </div>
-        
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="#solution" className="text-sm font-medium hover:text-satellite-blue transition-colors">Solution</a>
-          <a href="#contact" className="text-sm font-medium hover:text-satellite-blue transition-colors">Contact</a>
         </div>
         
         <Button 
           className="bg-gradient-to-r from-satellite-blue to-satellite-purple hover:opacity-90 transition-opacity"
         >
-          Get Started
+          Connect
         </Button>
       </div>
     </nav>
