@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Satellite } from 'lucide-react';
 
@@ -17,9 +16,9 @@ const AnimatedBackground = () => {
       }
       
       // Create floating orbs
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 10; i++) {
         const orb = document.createElement('div');
-        const size = Math.random() * 150 + 50;
+        const size = Math.random() * 200 + 100; // Larger orbs
         
         orb.className = 'absolute rounded-full';
         orb.style.width = `${size}px`;
@@ -28,7 +27,7 @@ const AnimatedBackground = () => {
         orb.style.top = `${Math.random() * 100}%`;
         orb.style.background = getRandomGradient();
         orb.style.opacity = `${Math.random() * 0.3 + 0.1}`;
-        orb.style.filter = 'blur(50px)';
+        orb.style.filter = 'blur(80px)';
         orb.style.animation = `float ${Math.random() * 15 + 10}s ease-in-out infinite alternate`;
         orb.style.animationDelay = `${Math.random() * 5}s`;
         orb.style.zIndex = '0';
@@ -36,20 +35,49 @@ const AnimatedBackground = () => {
         container.appendChild(orb);
       }
       
-      // Create satellites
-      for (let i = 0; i < 5; i++) {
+      // Create orbit paths
+      for (let i = 0; i < 3; i++) {
+        const orbitPath = document.createElement('div');
+        const size = 300 + (i * 150); // Increasing orbit sizes
+        
+        orbitPath.className = 'absolute rounded-full orbit-path top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
+        orbitPath.style.width = `${size}px`;
+        orbitPath.style.height = `${size}px`;
+        orbitPath.style.zIndex = '1';
+        
+        container.appendChild(orbitPath);
+      }
+      
+      // Create satellites (larger and more prominent)
+      for (let i = 0; i < 8; i++) {
         const satellite = document.createElement('div');
         satellite.className = 'absolute';
-        satellite.style.left = `${Math.random() * 100}%`;
-        satellite.style.top = `${Math.random() * 100}%`;
+        satellite.style.left = '50%';
+        satellite.style.top = '50%';
         satellite.style.transform = 'translate(-50%, -50%)';
-        satellite.style.animation = `orbit ${Math.random() * 30 + 20}s linear infinite`;
-        satellite.style.zIndex = '1';
         
+        // Different orbit sizes and speeds
+        const orbitSize = 150 + (i % 3) * 150;
+        const orbitSpeed = 30 + (i % 5) * 10;
+        const orbitDelay = i * (360 / 8); // Distribute satellites evenly around orbits
+        
+        satellite.style.animation = `orbit ${orbitSpeed}s linear infinite`;
+        satellite.style.animationDelay = `-${orbitDelay}s`; // Offset each satellite
+        satellite.style.zIndex = '2';
+        
+        // Create a container for the satellite to enable proper animation
+        const satelliteContainer = document.createElement('div');
+        satelliteContainer.style.position = 'absolute';
+        satelliteContainer.style.width = '48px';
+        satelliteContainer.style.height = '48px';
+        satelliteContainer.style.transform = `translateX(${orbitSize / 2}px)`; // Position on the orbit
+        satelliteContainer.style.animation = 'rotating 20s linear infinite'; // Rotate the satellite itself
+        
+        // Create the satellite SVG
         const satelliteIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         satelliteIcon.setAttribute('viewBox', '0 0 24 24');
-        satelliteIcon.setAttribute('width', '24');
-        satelliteIcon.setAttribute('height', '24');
+        satelliteIcon.setAttribute('width', '48');
+        satelliteIcon.setAttribute('height', '48');
         satelliteIcon.setAttribute('fill', 'none');
         satelliteIcon.setAttribute('stroke', 'currentColor');
         satelliteIcon.setAttribute('stroke-width', '2');
@@ -63,16 +91,27 @@ const AnimatedBackground = () => {
         satelliteIcon.appendChild(path);
         satelliteIcon.style.color = getRandomColor();
         
-        satellite.appendChild(satelliteIcon);
+        satelliteContainer.appendChild(satelliteIcon);
+        satellite.appendChild(satelliteContainer);
         container.appendChild(satellite);
+        
+        // Add a satellite beam for some satellites
+        if (i % 3 === 0) {
+          const beam = document.createElement('div');
+          beam.className = 'satellite-beam';
+          beam.style.height = '100px';
+          beam.style.left = '50%';
+          beam.style.top = '100%';
+          satelliteContainer.appendChild(beam);
+        }
       }
       
-      // Create pulse rings
+      // Keep the pulse rings (enhanced)
       for (let i = 0; i < 3; i++) {
         const ring = document.createElement('div');
         ring.className = 'absolute rounded-full border-2 border-satellite-blue top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2';
-        ring.style.width = '10vw';
-        ring.style.height = '10vw';
+        ring.style.width = '20vw';
+        ring.style.height = '20vw';
         ring.style.opacity = '0';
         ring.style.animation = 'ping 4s cubic-bezier(0, 0, 0.2, 1) infinite';
         ring.style.animationDelay = `${i * 1.3}s`;
@@ -111,14 +150,19 @@ const AnimatedBackground = () => {
       }
       
       @keyframes orbit {
-        0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
-        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        0% { transform: translate(-50%, -50%) rotate(0deg) translateX(var(--orbit-distance)) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg) translateX(var(--orbit-distance)) rotate(-360deg); }
       }
       
       @keyframes ping {
         0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
         50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.4; }
         100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+      }
+      
+      @keyframes rotating {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
     `;
     document.head.appendChild(styleSheet);

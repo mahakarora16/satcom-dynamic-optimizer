@@ -21,8 +21,8 @@ const Index = () => {
       <AnimatedBackground />
       
       <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-        <div className="text-center space-y-8 max-w-4xl px-6">
-          <h1 className="text-8xl font-bold animate-fade-in-up animation-delay-200">
+        <div className="text-center space-y-10 max-w-4xl px-6">
+          <h1 className="text-8xl md:text-9xl font-bold animate-fade-in-up animation-delay-200">
             <span className="text-gradient">SAT AI</span>
           </h1>
           
